@@ -92,6 +92,10 @@
     "smiley.sleeping": {
       "category": "neutral",
       "sounds": ["sounds/world/smiley/emoji_sleep_sound"]
+    },
+    "smiley.laughing": {
+      "category": "neutral",
+      "sounds": ["sounds/world/smiley/emoji_laugh_sound"]
     }
   }
 }

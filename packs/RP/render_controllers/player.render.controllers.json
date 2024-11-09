@@ -4,46 +4,39 @@
     "controller.render.player.third_person": {
       "arrays": {
         "geometries": {
-          "Array.geo": [
-            "Geometry.default",
-            "Geometry.canon",
-            "Geometry.smiley.s",
-            "Geometry.smiley.c",
-            "Geometry.smiley.a",
-            "Geometry.thor",
-            "Geometry.oni",
-            "Geometry.hades",
-            "Geometry.tyche"
-          ]
+          "Array.geo": ["Geometry.default"]
         },
         "textures": {
-          "Array.textures": [
-            "Texture.default",
-            "Texture.canon",
-            "Texture.smiley.s",
-            "Texture.smiley.c",
-            "Texture.smiley.a",
-            "Texture.thor",
-            "Texture.oni",
-            "Texture.hades",
-            "Texture.tyche"
-          ]
+          "Array.textures": ["Texture.default"]
         }
       },
-      "geometry": "Array.geo[query.property('ao:skin_id')]",
+      "geometry": "Array.geo[0]",
       "materials": [
         {
           "*": "Material.default"
         }
       ],
-      "textures": ["Array.textures[query.property('ao:skin_id')]"],
+      "textures": ["Array.textures[0]"],
       "part_visibility": [
-        { "*": true },
-        { "helmet": "variable.helmet_layer_visible" },
-        { "leftLegging": "variable.leg_layer_visible" },
-        { "rightLegging": "variable.leg_layer_visible" },
-        { "leftBoot": "variable.boot_layer_visible" },
-        { "rightBoot": "variable.boot_layer_visible" },
+        { "*": "query.property('ao:skin_id') == 0" },
+        {
+          "helmet": "variable.helmet_layer_visible && query.property('ao:skin_id') == 0"
+        },
+        {
+          "cape": true
+        },
+        {
+          "rightItem": true
+        },
+        {
+          "rightLegging": "variable.leg_layer_visible && query.property('ao:skin_id') == 0"
+        },
+        {
+          "leftBoot": "variable.boot_layer_visible && query.property('ao:skin_id') == 0"
+        },
+        {
+          "rightBoot": "variable.boot_layer_visible && query.property('ao:skin_id') == 0"
+        },
         {
           "leftSock": "variable.boot_layer_visible && variable.leg_layer_visible"
         },
@@ -56,15 +49,69 @@
         { "belt": "variable.chest_layer_visible && variable.leg_layer_visible" }
       ]
     },
-    "controller.render.outline.third_person": {
-      "part_visibility": [{ "*": true }],
+    "controller.render.player.third_person_custom": {
+      "arrays": {
+        "geometries": {
+          "Array.geo": [
+            "Geometry.canon",
+            "Geometry.smiley.s",
+            "Geometry.smiley.c",
+            "Geometry.smiley.a",
+            "Geometry.thor",
+            "Geometry.oni",
+            "Geometry.hades",
+            "Geometry.tyche"
+          ]
+        },
+        "textures": {
+          "Array.textures": [
+            "Texture.canon",
+            "Texture.smiley.s",
+            "Texture.smiley.c",
+            "Texture.smiley.a",
+            "Texture.thor",
+            "Texture.oni",
+            "Texture.hades",
+            "Texture.tyche"
+          ]
+        }
+      },
+      "geometry": "Array.geo[query.property('ao:skin_id')-1]",
       "materials": [
         {
-          "*": "material.outline"
+          "*": "Material.default"
         }
       ],
-      "geometry": "Geometry.outline",
-      "textures": ["Texture.outline"]
+      "textures": ["Array.textures[query.property('ao:skin_id')-1]"],
+      "part_visibility": [
+        { "*": true },
+        {
+          "helmet": "variable.helmet_layer_visible"
+        },
+        { "rightItem": true },
+        {
+          "leftLegging": "variable.leg_layer_visible"
+        },
+        {
+          "rightLegging": "variable.leg_layer_visible"
+        },
+        {
+          "leftBoot": "variable.boot_layer_visible"
+        },
+        {
+          "rightBoot": "variable.boot_layer_visible "
+        },
+        {
+          "leftSock": "variable.boot_layer_visible && variable.leg_layer_visible"
+        },
+        {
+          "rightSock": "variable.boot_layer_visible && variable.leg_layer_visible"
+        },
+        { "bodyArmor": "variable.chest_layer_visible && !query.has_cape" },
+        { "leftArmArmor": "variable.chest_layer_visible && !query.has_cape" },
+        { "rightArmArmor": "variable.chest_layer_visible && !query.has_cape" },
+        { "belt": "variable.chest_layer_visible && variable.leg_layer_visible" }
+      ]
     },
     "controller.render.tail.third_person": {
       "part_visibility": [{ "*": true }],
@@ -75,6 +122,23 @@
       ],
       "geometry": "Geometry.tail",
       "textures": ["Texture.tail"]
+    },
+    "controller.render.player.cape": {
+      "rebuild_animation_matrices": true,
+      "geometry": "Geometry.cape",
+      "materials": [{ "*": "Material.cape" }],
+      "textures": ["Texture.smiley.s"],
+      "part_visibility": [
+        {
+          "cape": "query.armor_texture_slot(1) != 5 && (!variable.is_first_person || variable.is_paperdoll) && !variable.map_face_icon && !query.is_spectator"
+        }
+      ],
+      "is_hurt_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      }
     }
   }
 }

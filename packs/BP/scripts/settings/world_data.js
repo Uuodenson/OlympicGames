@@ -47,4 +47,4 @@ world.afterEvents.itemUse.subscribe((event) => {
     }
 })
 
-export const version = "beta-0.1"
+export const version = "beta-0.100"

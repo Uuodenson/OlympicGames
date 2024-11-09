@@ -41,7 +41,7 @@ export const LootSyntax = [
         title: "Oni Skin", purchased: false, type: BPT.SKINS, skin: 6, rarity: Shopvalue.legendary
     },
     {
-        title: "Cry", purchased: false, type: BPT.EMOJIS, value: 7, rarity: Shopvalue.rare
+        title: "Smartass Moji", purchased: false, type: BPT.EMOJIS, value: 3, rarity: Shopvalue.rare
     },
     {
         title: "LLJWRLD", purchased: false, type: BPT.NAMETAGS, rarity: Shopvalue.epic

@@ -7,9 +7,10 @@ const emojisoundId = [{ id: 0, sound: "smiley.default" }
     , { id: 1, sound: "smiley.frosty" },
 { id: 2, sound: "smiley.angry" },
 { id: 3, sound: "smiley.smartass" },
+{ id: 4, sound: "smiley.laughing" },
 { id: 5, sound: "smiley.cry" },
 { id: 6, sound: "smiley.sleeping" },
-{ id: 8, sound: "smiley.cry" },
+{ id: 7, sound: "smiley.cry" },
 ]
 
 world.afterEvents.itemUse.subscribe(({ source, itemStack }) => {
@@ -43,6 +44,7 @@ world.afterEvents.itemUse.subscribe(({ source, itemStack }) => {
             entity.addTag(source.name)
             entity.runCommand(`ride @s start_riding ${source.name}`)
             let sound = emojisoundId.find((sound) => sound.id === emote.value)
+            if (sound === undefined) return
             entity.runCommand(`execute at @s run playsound ${sound.sound} @a[r=10] ~ ~ ~ 1 1`)
         })
     }

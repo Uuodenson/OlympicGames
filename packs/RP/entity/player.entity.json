@@ -151,10 +151,10 @@
           "controller.render.player.third_person": "!variable.is_first_person && !variable.map_face_icon && !query.is_spectator && !query.property('ao:is_spectator')"
         },
         {
-          "controller.render.player.map": "variable.map_face_icon"
+          "controller.render.player.third_person_custom": "!variable.is_first_person && !variable.map_face_icon && !query.is_spectator && !query.property('ao:is_spectator') && query.property('ao:skin_id') > 0"
         },
         {
-          "controller.render.outline.third_person": "!variable.is_first_person && !variable.map_face_icon && !query.is_spectator"
+          "controller.render.player.map": "variable.map_face_icon"
         },
         {
           "controller.render.tail.third_person": "!variable.is_first_person && !variable.map_face_icon && !query.is_spectator && query.property('ao:is_tail')"
