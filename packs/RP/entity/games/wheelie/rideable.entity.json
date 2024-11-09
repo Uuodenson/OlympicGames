@@ -1,0 +1,24 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "ao:rideable",
+      "materials": {
+        "default": "entity_custom"
+      },
+      "textures": {
+        "default": "textures/entity/game/wheelie_run_game/one_wheelie.png"
+      },
+      "geometry": {
+        "default": "geometry.one_wheel"
+      },
+      "animations": {
+        "move": "animation.einrad"
+      },
+      "scripts": {
+        "animate": [{ "move": "query.modified_move_speed > 0.1" }]
+      },
+      "render_controllers": ["controller.render.arrow"]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.blitz": {
+      "loop": true,
+      "animation_length": 0.5,
+      "bones": {
+        "blitz": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.5": [0, 0, -360]
+          }
+        },
+        "miniblitze": {
+          "rotation": {
+            "0.0": [0, 0, 0],
+            "0.5": [0, 0, -360]
+          }
+        }
+      }
+    }
+  }
+}

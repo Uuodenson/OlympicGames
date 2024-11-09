@@ -1,0 +1,39 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.canon": {
+      "animation_length": 0.2083,
+      "bones": {
+        "rohrende": {
+          "position": {
+            "0.0": [0, 0, 0],
+            "0.125": [0, -0.2, 0.5],
+            "0.2083": [0, 0, 0]
+          }
+        },
+        "rohrvorne": {
+          "position": {
+            "0.0": [0, 0, 0],
+            "0.125": [0, -0.3, 1],
+            "0.2083": [0, 0, 0]
+          }
+        },
+        "rohr": {
+          "scale": {
+            "0.0": [1, 1, 1],
+            "0.125": [0.96, 0.96, 0.96],
+            "0.2083": [1, 1, 1]
+          }
+        }
+      }
+    },
+    "animation.canon.look": {
+      "loop": true,
+      "bones": {
+        "rohr": {
+          "rotation": ["query.target_x_rotation", 0, 0]
+        }
+      }
+    }
+  }
+}

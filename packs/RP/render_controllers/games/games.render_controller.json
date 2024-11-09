@@ -1,0 +1,107 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.ring": {
+      "geometry": "Array.geo[query.property('ao:type')]",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": ["Array.default_texture[query.property('ao:type')]"],
+      "arrays": {
+        "textures": {
+          "Array.default_texture": [
+            "Texture.default",
+            "Texture.blue",
+            "Texture.purple",
+            "Texture.crown"
+          ]
+        },
+        "geometries": {
+          "Array.geo": [
+            "Geometry.default",
+            "Geometry.default",
+            "Geometry.default",
+            "Geometry.crown"
+          ]
+        }
+      }
+    },
+    "controller.render.skin": {
+      "geometry": "Array.geo[query.property('ao:type')]",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": ["Array.default_texture[query.property('ao:type')]"],
+      "arrays": {
+        "textures": {
+          "Array.default_texture": [
+            "Texture.canon",
+            "Texture.cube_one",
+            "Texture.cube_two",
+            "Texture.cube_three",
+            "Texture.treassure",
+            "Texture.ventilator"
+          ]
+        },
+        "geometries": {
+          "Array.geo": [
+            "Geometry.canon",
+            "Geometry.cube",
+            "Geometry.cube",
+            "Geometry.cube",
+            "Geometry.treassure",
+            "Geometry.ventilator"
+          ]
+        }
+      }
+    },
+    "controller.render.jerusalem": {
+      "geometry": "Array.geo[query.property('ao:type')]",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": ["Array.default_texture[query.property('ao:type')]"],
+      "arrays": {
+        "textures": {
+          "Array.default_texture": ["Texture.default"]
+        },
+        "geometries": {
+          "Array.geo": ["Geometry.default"]
+        }
+      }
+    },
+    "controller.render.smiley": {
+      "geometry": "Array.geo[query.property('ao:type')]",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": ["Array.default_texture[query.property('ao:type')]"],
+      "arrays": {
+        "textures": {
+          "Array.default_texture": [
+            "Texture.default",
+            "Texture.frosty",
+            "Texture.angry",
+            "Texture.smartass",
+            "Texture.laughing",
+            "Texture.cry",
+            "Texture.sleeping",
+            "Texture.minicry",
+            "Texture.cool"
+          ]
+        },
+        "geometries": {
+          "Array.geo": ["Geometry.default"]
+        }
+      }
+    }
+  }
+}

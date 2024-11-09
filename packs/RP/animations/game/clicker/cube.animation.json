@@ -1,0 +1,30 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.cube.motion": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "rotation": [
+            "26.5007 + math.sin(query.life_time*270) * 3",
+            "20.6662 + math.sin(query.life_time*270) * 3",
+            -41.09922
+          ],
+          "position": [5, 10, 4]
+        }
+      }
+    },
+    "animation.look_at_target_cube": {
+      "loop": true,
+      "bones": {
+        "head": {
+          "rotation": [
+            "-query.camera_rotation(0)",
+            "-query.camera_rotation(1)",
+            0.0
+          ]
+        }
+      }
+    }
+  }
+}

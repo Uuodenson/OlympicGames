@@ -1,0 +1,5 @@
+{
+  "base_size": [16, 16],
+  "namespace": "red_stripe",
+  "nineslice_size": [4, 4, 4, 4]
+}

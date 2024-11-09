@@ -1,0 +1,32 @@
+{
+  "format_version": 2,
+  "header": {
+    "uuid": "45b7d744-14fe-4e24-8d4b-efeabf7865c1",
+    "name": "Olympic Games BP",
+    "version": [1, 0, 0],
+    "description": "Olympic Games BP",
+    "min_engine_version": [1, 20, 4]
+  },
+  "modules": [
+    {
+      "uuid": "239c134f-67bf-4738-9bcc-8c69d31b1f72",
+      "version": [1, 0, 0],
+      "type": "script",
+      "language": "javascript",
+      "entry": "scripts/Main.js"
+    }
+  ],
+  "dependencies": [
+    {
+      // Enables the use of @minecraft/server module
+      // note that version changes every monthly releases.
+      "module_name": "@minecraft/server",
+      "version": "1.8.0"
+    },
+    {
+      // Enables the use of @minecraft/server-ui module
+      "module_name": "@minecraft/server-ui",
+      "version": "1.1.0"
+    }
+  ]
+}

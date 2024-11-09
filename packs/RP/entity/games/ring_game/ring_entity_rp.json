@@ -1,0 +1,35 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "ao:ring",
+      "materials": {
+        "default": "entity_custom"
+      },
+      "textures": {
+        "default": "textures/entity/game/ring_game/ring_green",
+        "blue": "textures/entity/game/ring_game/ring_blue.png",
+        "purple": "textures/entity/game/ring_game/ring_purple.png",
+        "crown": "textures/entity/game/ring_game/ring_king.png"
+      },
+      "geometry": {
+        "default": "geometry.ring",
+        "crown": "geometry.ring_king"
+      },
+      "animations": {
+        "default": "animation.ring.spin",
+        "crown": "animation.crownring.spin"
+      },
+      "scripts": {
+        "animate": [
+          { "default": "query.property('ao:type') != 4" },
+          { "crown": "query.property('ao:type') == 4" }
+        ]
+      },
+      "render_controllers": ["controller.render.ring"],
+      "spawn_egg": {
+        "texture": "games"
+      }
+    }
+  }
+}

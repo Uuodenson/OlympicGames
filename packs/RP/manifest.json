@@ -1,0 +1,23 @@
+{
+  "format_version": 2,
+  "header": {
+    "description": "Olympic Games RP",
+    "name": "Olympic Games RP",
+    "uuid": "f0f9745d-aca1-4a26-b09c-e8a59ef8d41c",
+    "min_engine_version": [1, 20, 40],
+    "version": [1, 0, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "b7b823ce-3d20-4f13-a513-47531d3b4b5e",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "45b7d744-14fe-4e24-8d4b-efeabf7865c1",
+      "version": "1.0.0"
+    }
+  ]
+}

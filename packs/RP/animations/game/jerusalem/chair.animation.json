@@ -1,0 +1,43 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.chair.spawn": {
+      "animation_length": 0.75,
+      "bones": {
+        "root": {
+          "rotation": { "0.0": [0, 360, 0], "0.75": [0, 0, 0] },
+          "position": [0, 0, 0],
+          "scale": { "0.0": [0, 0, 0], "0.2083": [1, 1, 1] }
+        }
+      }
+    },
+    "animation.chair.swing": {
+      "loop": true,
+      "override_previous_animation": true,
+      "bones": {
+        "root": {
+          "rotation": [
+            "math.sin(query.life_time * 200) * 0.25",
+            "math.sin(query.life_time * 200) * 2.5",
+            0
+          ],
+          "scale": "1 + math.abs(math.sin(query.life_time * 100)) * 0.02"
+        }
+      }
+    },
+    "animation.chair.idle": {
+      "loop": true,
+      "bones": {
+        "root": { "rotation": [0, 0, 0], "position": [0, 0, 0], "scale": 1 }
+      }
+    },
+    "animation.chair.look_at_target": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "rotation": [0, "-query.camera_rotation(1)", 0]
+        }
+      }
+    }
+  }
+}

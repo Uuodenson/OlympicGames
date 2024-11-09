@@ -1,0 +1,73 @@
+{
+  "format_version": "1.20.81",
+  "sound_definitions": {
+    "canon": {
+      "category": "neutral",
+      "sounds": ["sounds/game/ring_game/canon_effect"]
+    },
+    "ventilator": {
+      "category": "neutral",
+      "sounds": ["sounds/game/ring_game/ventilator_sound"]
+    },
+    "crown": {
+      "category": "neutral",
+      "sounds": ["sounds/game/ring_game/crownring_sound"]
+    },
+    "treassure": {
+      "category": "music",
+      "sounds": ["sounds/game/clicker_game/chest.open.sound"]
+    },
+    "lighting": {
+      "category": "neutral",
+      "sounds": ["sounds/game/thunder_hit/lightning.sound"]
+    },
+    "thunder_kill": {
+      "category": "neutral",
+      "sounds": ["sounds/game/thunder_hit/kill_sound"]
+    },
+    "hammer_swing": {
+      "category": "neutral",
+      "sounds": ["sounds/game/thunder_hit/hammer_swing_sound"]
+    },
+    "jerusalem_song_one": {
+      "category": "music",
+      "max_distance": null,
+      "min_distance": null,
+      "sounds": ["sounds/game/jerusalem/synthetic_meltdown_2"]
+    },
+    "jersualem_song_two": {
+      "category": "music",
+      "max_distance": null,
+      "min_distance": null,
+      "sounds": ["sounds/game/jerusalem/synthetic_meltdown"]
+    },
+    "jerusalem_song_three": {
+      "category": "music",
+      "max_distance": null,
+      "min_distance": null,
+      "__use_legacy_max_distance": true,
+      "sounds": ["sounds/game/jerusalem/Pixel-Party"]
+    },
+    "jerusalem_song_four": {
+      "category": "music",
+      "max_distance": null,
+      "min_distance": null,
+      "__use_legacy_max_distance": true,
+      "sounds": ["sounds/game/jerusalem/Pixel-Party1"]
+    },
+    "item.trident.hit": {
+      "__use_legacy_max_distance": true,
+      "category": "player",
+      "max_distance": null,
+      "min_distance": null,
+      "sounds": [
+        { "name": "sounds/game/thunder_hit/lightning.sound", "volume": 0.5 }
+      ]
+    },
+    "sounds.world.lootbox.open": {
+      "__use_legacy_max_distance": true,
+      "category": "music",
+      "sounds": [{ "name": "sounds/world/lootbox_sound", "volume": 0.5 }]
+    }
+  }
+}

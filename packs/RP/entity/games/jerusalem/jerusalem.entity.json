@@ -1,0 +1,43 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "ao:jerusalem",
+      "materials": {
+        "default": "entity_custom"
+      },
+      "textures": {
+        "default": "textures/entity/game/jerusalem/chair"
+      },
+      "geometry": {
+        "default": "geometry.chair"
+      },
+      "animations": {
+        "idle": "animation.chair.idle",
+        "chair_spawn": "animation.chair.spawn",
+        "chair_swing": "animation.chair.swing",
+        "look_at_target": "animation.chair.look_at_target"
+      },
+      "scripts": {
+        "scale": "1.25",
+        "animate": [
+          {
+            "idle": "query.property('ao:type') == 0 && query.property('ao:animation') == 'idle'"
+          },
+          {
+            "chair_spawn": "query.property('ao:type') == 0 && query.property('ao:animation') == 'spawn'"
+          },
+          {
+            "chair_swing": "query.property('ao:type') == 0 && query.property('ao:animation') == 'swing'"
+          }
+          // "look_at_target"
+        ]
+      },
+      "render_controllers": ["controller.render.jerusalem"],
+      "spawn_egg": {
+        "base_color": "#7c4314",
+        "overlay_color": "#d2b628"
+      }
+    }
+  }
+}

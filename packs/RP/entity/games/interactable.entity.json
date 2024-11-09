@@ -1,0 +1,43 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "ao:interactable",
+      "materials": {
+        "default": "entity_custom"
+      },
+      "textures": {
+        "canon": "textures/entity/game/ring_game/canon",
+        "cube_one": "textures/entity/game/clicker_game/cube/one",
+        "cube_two": "textures/entity/game/clicker_game/cube/two",
+        "cube_three": "textures/entity/game/clicker_game/cube/three",
+        "treassure": "textures/entity/game/clicker_game/treassure.png",
+        "ventilator": "textures/entity/game/ring_game/ventilator"
+      },
+      "geometry": {
+        "canon": "geometry.skin_canon",
+        "cube": "geometry.ao_cube",
+        "treassure": "geometry.treassure",
+        "ventilator": "geometry.ventilator"
+      },
+      "animations": {
+        "cubeMotion": "animation.cube.motion",
+        "treassure": "animation.chest.open",
+        "look_at_target": "animation.common.look_at_target",
+        "ventilator": "animation.ventilator"
+      },
+      "scripts": {
+        "pre_animation": [
+          "v.rotation_to_camera_0 = -Math.atan2(-q.distance_from_camera * Math.sin(q.rotation_to_camera(0)) - 1, q.distance_from_camera * Math.cos(q.rotation_to_camera(0)));",
+          "v.look_at_entity = Math.abs(Math.abs(q.rotation_to_camera(1) - q.camera_rotation(1)) - 180) < (20 / q.distance_from_camera) && Math.abs(v.rotation_to_camera_0 + q.camera_rotation(0)) < (60 / q.distance_from_camera);"
+        ],
+        "animate": ["cubeMotion", "look_at_target", "ventilator"]
+      },
+      "render_controllers": ["controller.render.skin"],
+      "spawn_egg": {
+        "base_color": "#288483",
+        "overlay_color": "#2B7135"
+      }
+    }
+  }
+}

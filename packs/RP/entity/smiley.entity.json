@@ -1,0 +1,36 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "ao:smiley",
+      "materials": {
+        "default": "entity_custom"
+      },
+      "textures": {
+        "default": "textures/icons/emoticons/smileyPet",
+        "frosty": "textures/icons/emoticons/smileyFrosty",
+        "angry": "textures/icons/emoticons/smileyAngry",
+        "smartass": "textures/icons/emoticons/smileySmartass",
+        "laughing": "textures/icons/emoticons/smileyLaughing",
+        "cry": "textures/icons/emoticons/smileyCryOut",
+        "sleeping": "textures/icons/emoticons/smileySleeping",
+        "minicry": "textures/icons/emoticons/smileyCry",
+        "cool": "textures/icons/emoticons/smileyCool"
+      },
+      "geometry": {
+        "default": "geometry.smiley"
+      },
+      "animations": {
+        "default": "animation.smiley.rotation"
+      },
+      "scripts": {
+        "animate": ["default"]
+      },
+      "render_controllers": ["controller.render.smiley"],
+      "spawn_egg": {
+        "base_color": "#ac681b",
+        "overlay_color": "#e0bc1b"
+      }
+    }
+  }
+}

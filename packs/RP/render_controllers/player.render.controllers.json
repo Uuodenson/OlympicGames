@@ -1,0 +1,80 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+    "controller.render.player.third_person": {
+      "arrays": {
+        "geometries": {
+          "Array.geo": [
+            "Geometry.default",
+            "Geometry.canon",
+            "Geometry.smiley.s",
+            "Geometry.smiley.c",
+            "Geometry.smiley.a",
+            "Geometry.thor",
+            "Geometry.oni",
+            "Geometry.hades",
+            "Geometry.tyche"
+          ]
+        },
+        "textures": {
+          "Array.textures": [
+            "Texture.default",
+            "Texture.canon",
+            "Texture.smiley.s",
+            "Texture.smiley.c",
+            "Texture.smiley.a",
+            "Texture.thor",
+            "Texture.oni",
+            "Texture.hades",
+            "Texture.tyche"
+          ]
+        }
+      },
+      "geometry": "Array.geo[query.property('ao:skin_id')]",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": ["Array.textures[query.property('ao:skin_id')]"],
+      "part_visibility": [
+        { "*": true },
+        { "helmet": "variable.helmet_layer_visible" },
+        { "leftLegging": "variable.leg_layer_visible" },
+        { "rightLegging": "variable.leg_layer_visible" },
+        { "leftBoot": "variable.boot_layer_visible" },
+        { "rightBoot": "variable.boot_layer_visible" },
+        {
+          "leftSock": "variable.boot_layer_visible && variable.leg_layer_visible"
+        },
+        {
+          "rightSock": "variable.boot_layer_visible && variable.leg_layer_visible"
+        },
+        { "bodyArmor": "variable.chest_layer_visible && !query.has_cape" },
+        { "leftArmArmor": "variable.chest_layer_visible && !query.has_cape" },
+        { "rightArmArmor": "variable.chest_layer_visible && !query.has_cape" },
+        { "belt": "variable.chest_layer_visible && variable.leg_layer_visible" }
+      ]
+    },
+    "controller.render.outline.third_person": {
+      "part_visibility": [{ "*": true }],
+      "materials": [
+        {
+          "*": "material.outline"
+        }
+      ],
+      "geometry": "Geometry.outline",
+      "textures": ["Texture.outline"]
+    },
+    "controller.render.tail.third_person": {
+      "part_visibility": [{ "*": true }],
+      "materials": [
+        {
+          "*": "material.default"
+        }
+      ],
+      "geometry": "Geometry.tail",
+      "textures": ["Texture.tail"]
+    }
+  }
+}

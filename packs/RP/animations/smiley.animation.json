@@ -1,0 +1,20 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.smiley.rotation": {
+      "loop": true,
+      "bones": {
+        "body": {
+          "relative_to": {
+            "rotation": "entity"
+          },
+          "rotation": [
+            "query.rotation_to_camera(0)",
+            "query.rotation_to_camera(1) - query.body_y_rotation",
+            0
+          ]
+        }
+      }
+    }
+  }
+}

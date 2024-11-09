@@ -1,0 +1,63 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "ao:rideable",
+      "is_spawnable": true,
+      "is_summonable": true
+    },
+    "component_groups": {
+      "ao:despawn": {
+        "minecraft:instant_despawn": {
+          "remove_child_entities": false
+        }
+      }
+    },
+    "components": {
+      "minecraft:movement": {
+        "value": 0.2
+      },
+      "minecraft:collision_box": {
+        "height": 1,
+        "width": 1
+      },
+      "minecraft:rideable": {
+        "controlling_seat": 0,
+        "crouching_skip_interact": true,
+        "family_types": ["player"],
+        "interact_text": "Get on!",
+        "pull_in_entities": false,
+        "rider_can_interact": true,
+        "seat_count": 1,
+        "seats": {
+          "position": [0, 1.1, -0.2],
+          "max_rider_count": 1,
+          "min_rider_count": 0
+        }
+      },
+      "minecraft:physics": {
+        "has_collision": true,
+        "has_gravity": true
+      },
+      "minecraft:health": {
+        "value": 1
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "all",
+            "deals_damage": false
+          }
+        ]
+      },
+      "minecraft:input_ground_controlled": {}
+    },
+    "events": {
+      "ao:despawn": {
+        "add": {
+          "component_groups": ["ao:despawn"]
+        }
+      }
+    }
+  }
+}

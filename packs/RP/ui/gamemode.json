@@ -1,0 +1,20 @@
+{
+  "namespace": "choose",
+
+  "panel@background": {
+    "controls": [
+      {
+        "close_button@common.close_button": {
+          "anchor_from": "top_right",
+          "anchor_to": "center"
+        }
+      }
+    ]
+  },
+  "background": {
+    "type": "image",
+    "$texture": "texxtures/ui/Black",
+    "texture": "$texture",
+    "size": ["100%", "100%"]
+  }
+}

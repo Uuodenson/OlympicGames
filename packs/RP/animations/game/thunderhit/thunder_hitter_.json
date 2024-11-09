@@ -1,0 +1,56 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.tunder_hitter.first_person_hold": {
+			"loop": true,
+			"bones": {
+				"root_item": {
+					"rotation": [-276.8049, 64.7823, -403.49067],
+					"position": [8.57885, 26.60894, 5.2314]
+				}
+			}
+		},
+		"animation.thunder.first_person": {
+			"loop": true,
+			"bones": {
+				"root_item": {
+					"rotation": [66, 60, -60],
+					"position": [3, 23, 4]
+				}
+			}
+		},
+		"animation.tunder_hitter.third_person_hold": {
+			"loop": true,
+			"bones": {
+				"Axe": {
+					"position": [0, -6, 0]
+				},
+				"root_item": {
+					"rotation": [72.5, 0, 0],
+					"position": [0, 20.94078, 4.7417]
+				}
+			}
+		},
+		"animation.thunder.third_person": {
+			"loop": true,
+			"bones": {
+				"Axe": {
+					"position": [0, -6, 0]
+				},
+				"root_item": {
+					"rotation": [90, 0, 0],
+					"position": [0.5, 24.31173, 6.26148]
+				}
+			}
+		},
+		"animation.thunder.third_throw": {
+			"loop": true,
+			"bones": {
+				"root_item": {
+					"rotation": [-77.5, 0, 0],
+					"position": [7, -5, -30]
+				}
+			}
+		}
+	}
+}

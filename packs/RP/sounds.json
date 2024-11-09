@@ -1,0 +1,32 @@
+{
+  "entity_sounds": {
+    "entities": {
+      "player": {
+        "events": {
+          "attack.nodamage": "game.player.attack.nodamage",
+          "attack.strong": "game.player.attack.strong",
+          "death": "game.player.die",
+          "death.in.water": "game.player.die",
+          "elderguardian.curse": {
+            "pitch": 1.0,
+            "sound": "mob.elderguardian.curse",
+            "volume": 1.0
+          },
+          "hurt": "game.player.hurt",
+          "hurt.in.water": "game.player.hurt",
+          "splash": {
+            "pitch": [0.6, 1.4],
+            "sound": "entity.generic.splash"
+          },
+          "throw": {
+            "pitch": [0.33, 0.5],
+            "sound": "lighting",
+            "volume": 0.5
+          }
+        },
+        "pitch": [0.8, 1.2],
+        "volume": 1.0
+      }
+    }
+  }
+}

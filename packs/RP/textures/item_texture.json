@@ -1,0 +1,22 @@
+{
+  "resource_pack_name": "Olympic Games RP",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "games": {
+      "textures": "textures/items/games/spawn_egg"
+    },
+    "sword": {
+      "textures": [
+        "textures/items/wood_sword",
+        "textures/entity/game/clicker_game/cube/one.png",
+        "textures/items/iron_sword",
+        "textures/entity/game/clicker_game/cube/two.png",
+        "textures/entity/game/clicker_game/cube/three.png",
+        "textures/items/netherite_sword"
+      ]
+    },
+    "thunder": {
+      "textures": "textures/items/games/spawn_egg"
+    }
+  }
+}

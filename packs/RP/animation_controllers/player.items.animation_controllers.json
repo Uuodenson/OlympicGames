@@ -1,0 +1,24 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.hammer": {
+      "states": {
+        "idle": {
+          "transitions": [
+            {
+              "hammern": "variable.attack_time > 0.0f && query.is_item_name_any('slot.weapon.mainhand','minecraft:wooden_sword') && !v.is_first_person"
+            }
+          ]
+        },
+        "hammern": {
+          "animations": ["hammer"],
+          "transitions": [
+            {
+              "idle": "query.all_animations_finished"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

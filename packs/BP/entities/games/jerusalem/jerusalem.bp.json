@@ -1,0 +1,101 @@
+{
+  "format_version": "1.20.80",
+
+  "minecraft:entity": {
+    "description": {
+      "identifier": "ao:jerusalem",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "properties": {
+        "ao:type": {
+          "type": "int",
+          "default": 0,
+          "range": [0, 1],
+          "client_sync": true
+        },
+        "ao:animation": {
+          "type": "enum",
+          "default": "swing",
+          "values": ["idle", "spawn", "swing"],
+          "client_sync": true
+        }
+      }
+    },
+    "component_groups": {
+      "ao:despawn": {
+        "minecraft:instant_despawn": {
+          "remove_child_entities": false
+        }
+      }
+    },
+    "components": {
+      "minecraft:interact": {
+        "interactions": [
+          {
+            "on_interact": {
+              "event": "ao:interact",
+              "filters": {
+                "test": "int_property",
+                "value": 0,
+                "operator": "==",
+                "domain": "ao:type"
+              }
+            }
+          }
+        ]
+      },
+      "minecraft:movement": {
+        "value": 0.2
+      },
+      "minecraft:collision_box": {
+        "height": 1,
+        "width": 1
+      },
+      "minecraft:rideable": {
+        "controlling_seat": 0,
+        "crouching_skip_interact": true,
+        "family_types": ["player"],
+        "interact_text": "Get on!",
+        "pull_in_entities": false,
+        "rider_can_interact": true,
+        "seat_count": 1,
+        "seats": {
+          "position": [0, 1.1, -0.2],
+          "max_rider_count": 1,
+          "min_rider_count": 0
+        }
+      },
+      "minecraft:physics": {
+        "has_collision": true,
+        "has_gravity": true
+      },
+      "minecraft:health": {
+        "value": 1
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "all",
+            "deals_damage": false
+          }
+        ]
+      }
+    },
+    "events": {
+      "ao:despawn": {
+        "add": {
+          "component_groups": ["ao:despawn"]
+        }
+      },
+      "ao:interact": {
+        "queue_command": {
+          "command": [
+            "tag @p[r=3] add chair",
+            "say @p[r=3] is on the chair",
+            "ride @p[r=3] start_riding @s"
+          ]
+        }
+      }
+    }
+  }
+}
