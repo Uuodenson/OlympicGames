@@ -3,9 +3,14 @@ import { createActionForm } from "../../game/utils/functions";
 import { data } from "../../game/utils/loaddata";
 import { BPT } from "../../game/utils/enums/custom";
 
-
-const emojis = [{ name: "smiley", id: 0 }, { name: "frosty", id: 1 }, { name: "angry", id: 2 }, { name: "smartass", id: 3 }]
-
+const emojisoundId = [{ id: 0, sound: "smiley.default" }
+    , { id: 1, sound: "smiley.frosty" },
+{ id: 2, sound: "smiley.angry" },
+{ id: 3, sound: "smiley.smartass" },
+{ id: 5, sound: "smiley.cry" },
+{ id: 6, sound: "smiley.sleeping" },
+{ id: 8, sound: "smiley.cry" },
+]
 
 world.afterEvents.itemUse.subscribe(({ source, itemStack }) => {
     if (itemStack.typeId == "minecraft:stick") {
@@ -37,6 +42,8 @@ world.afterEvents.itemUse.subscribe(({ source, itemStack }) => {
             entity.setProperty("ao:type", emote.value)
             entity.addTag(source.name)
             entity.runCommand(`ride @s start_riding ${source.name}`)
+            let sound = emojisoundId.find((sound) => sound.id === emote.value)
+            entity.runCommand(`execute at @s run playsound ${sound.sound} @a[r=10] ~ ~ ~ 1 1`)
         })
     }
 })

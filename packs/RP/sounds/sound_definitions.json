@@ -68,6 +68,30 @@
       "__use_legacy_max_distance": true,
       "category": "music",
       "sounds": [{ "name": "sounds/world/lootbox_sound", "volume": 0.5 }]
+    },
+    "smiley.default": {
+      "category": "neutral",
+      "sounds": ["sounds/world/smiley/emoji_normal_sound"]
+    },
+    "smiley.frosty": {
+      "category": "neutral",
+      "sounds": ["sounds/world/smiley/emoji_cold_sound"]
+    },
+    "smiley.angry": {
+      "category": "neutral",
+      "sounds": ["sounds/world/smiley/emoji_angry_sound"]
+    },
+    "smiley.smartass": {
+      "category": "neutral",
+      "sounds": ["sounds/world/smiley/emoji_smart_sound"]
+    },
+    "smiley.cry": {
+      "category": "neutral",
+      "sounds": ["sounds/world/smiley/emoji_sad_sound"]
+    },
+    "smiley.sleeping": {
+      "category": "neutral",
+      "sounds": ["sounds/world/smiley/emoji_sleep_sound"]
     }
   }
 }
