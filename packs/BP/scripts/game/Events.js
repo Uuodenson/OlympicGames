@@ -7,6 +7,8 @@ import { SavedDataTypes } from "./utils/enums/custom";
 import { BattlpassSyntax } from "./utils/syntax/saveddatatypes";
 import { data } from "./utils/loaddata";
 import { GameEvents } from "./utils/events";
+import { saveinGameData } from "./utils/savingdata";
+import { SaveGameData } from "./utils/Editor";
 export const gameEvents = new GameEvents("ao:game")
 
 export const uiEvents = new GameEvents("ao:ui")
@@ -33,6 +35,10 @@ gameEvents.addRemoteEvent("Battle Pass Upgrade", (props) => {
 })
 
 gameEvents.addRemoteEvent("Exp.Coins", (props) => {
+    const levelUpThresholds = [
+        0, 20, 45, 75, 110, 150, 195, 245, 300, 360, 425, 495, 570, 650, 735
+    ];
+    world.sendMessage(JSON.stringify(props))
     /**
      * @type {{value: number, muliplier: number}}
      */
@@ -44,10 +50,9 @@ gameEvents.addRemoteEvent("Exp.Coins", (props) => {
     let winnericon = ["", "", ""]
     coins.value += 3 * coins.muliplier
     let filteredBattlePass = data.find(data => data.id === props.player.id).data.find(data => data.id === 0).data.filter(data => data.purchased === false)
-    if (exp.value >= exp.max_value && exp.level < exp.max_level) {
+    world.sendMessage(exp.value + " " + exp.max_value + " " + exp.level + " " + exp.max_level)
+    if (exp.value >= levelUpThresholds[exp.level]) {
         exp.level += 1
-        exp.max_value = exp.value - exp.level
-        exp.value = 0
         if (filteredBattlePass.length > 0) {
             filteredBattlePass[0].purchased = true
             props.player.sendMessage("BattlepassUpgrade" + filteredBattlePass[0].title)
@@ -62,6 +67,45 @@ gameEvents.addRemoteEvent("Exp.Coins", (props) => {
     world.sendMessage(`${winnericon[1]} Player2`)
     world.sendMessage(`${winnericon[2]} Player3`)
 })
+
+export function givePoints(player, amount = 1, winners) {
+
+    const levelUpThresholds = [
+        10, 20, 45, 75, 110, 150, 195, 245, 300, 360, 425, 495
+    ];
+    let exp = data.find((data) => data.id === player.id).data.find((data) => data.id === 2).data
+    let coins = data.find(data => data.id === player.id).data.find(data => data.id === 1).data
+    exp.value += amount
+    coins.value += amount * coins.muliplier
+    let winnericon = ["", "", ""]
+    coins.value += 3 * coins.muliplier
+    let filteredBattlePass = data.find(data => data.id === player.id).data.find(data => data.id === 0).data.filter(data => data.purchased === false)
+    if (exp.value >= levelUpThresholds[exp.level]) {
+        exp.level += 1
+        if (filteredBattlePass.length > 0) {
+            filteredBattlePass[0].purchased = true
+            player.sendMessage("BattlepassUpgrade" + filteredBattlePass[0].title)
+        }
+        gameEvents.triggerEvent("Battle Pass Upgrade", { player: player, level: exp.level })
+    } else {
+        exp.value += amount
+    }
+    for (let ob of Object.keys(winners)) {
+        if (winners[ob] == player) {
+            exp.value += amount * 2
+        }
+        else {
+            winners[ob] = { name: winners[ob] }
+        }
+
+    }
+
+    player.sendMessage(`${winnericon[0]} ${winners.first.name}`)
+    player.sendMessage(`${winnericon[1]} ${winners.second.name}`)
+    player.sendMessage(`${winnericon[2]} ${winners.third.name}`)
+    SaveGameData(player)
+}
+
 
 gameEvents.addRemoteEvent("RandomTitleAnimation", (props) => {
     let endpoint = props.game
@@ -112,7 +156,7 @@ gameEvents.addRemoteEvent("NextRound", (props) => {
 })
 
 gameEvents.addRemoteEvent("Looby", () => {
-    world.sendMessage("Now you have to go to the Lobby")
+
 })
 
 gameEvents.addRemoteEvent("GameFinished", () => {

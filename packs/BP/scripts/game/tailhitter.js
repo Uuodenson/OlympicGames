@@ -1,4 +1,4 @@
-import { world, system, Player } from "@minecraft/server";
+import { world, system, Player, ScoreboardObjective } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui"
 import { calcTimetoTicks, getAllPlayers, getOwner, getRandomPlayer, runCommand, timeValues } from "./utils/functions";
 import { gameEvents } from "./Events";
@@ -8,11 +8,15 @@ let turns_multiplier = 3
 let rounds
 
 function calcRounds() {
-    return world.getPlayers().length + 1
+    // world.getPlayers().length + 1
+    return 1
 }
 
-const score = [{ name: "t", score: 0, id: "-187" }]
-
+const score = []
+/**
+ * @type {ScoreboardObjective}
+ */
+let scoreboard
 function findoraddScore(player) {
     let scorechild = false
     score.forEach(score => {
@@ -45,7 +49,7 @@ function findhighestScoreEntry() {
 function calculateTurns() {
     let length = getAllPlayers().length
     turns = length * turns_multiplier
-    return turns
+    return 1
 }
 function resetValues() {
     timer = timeValues.default
@@ -68,6 +72,11 @@ function updateTail(hitter) {
     turns--
     runCommand("say " + hitter.name + " is has the tail!")
     world.playSound("note.pling", hitter.location)
+    if (scoreboard) {
+        scoreboard.setScore(hitter, scoreboard.getScore(hitter) + 1)
+    } else {
+        scoreboard.addScore(hitter, 0)
+    }
 }
 
 function displayText() {
@@ -93,6 +102,7 @@ function GameLoop() {
                 gameEvents.triggerEvent("Exp.Coins", { amounts: 30, player: player }) //! Trigger Event
             })
             gameEvents.triggerEvent("NextRound", { player: getOwner()[0] })
+            runCommand("function resetmap")
         }
         if (turns < 1) {
             rounds--
@@ -113,7 +123,7 @@ function GameLoop() {
     }, calcTimetoTicks(1))
 
     let hitevent = world.afterEvents.entityHitEntity.subscribe((event) => {
-        if (event.damagingEntity instanceof Player && event.hitEntity instanceof Player) {
+        if (event.damagingEntity instanceof Player && event.hitEntity instanceof Player && event.damagingEntity.player.getProperty("ao:is_tail") == false && event.hitEntity.player.getProperty("ao:is_tail") == true) {
             updateTail(event.damagingEntity)
         }
     })
@@ -137,13 +147,18 @@ function setupScoreboard() {
             scoreboard = world.scoreboard.getObjective("tailhitter")
             scoreboard.addScore(player, 0)
         })
+        scoreboard = world.scoreboard.getObjective("tailhitter")
     }
+    return scoreboard
 }
 
 function calculateWinner() {
     const objective = world.scoreboard.getObjective("tailhitter");
     const players = getAllPlayers();
-    let scorearray = [];
+    let scorearray = ["-", "-", "-"];
+    if (players.length >= 3) {
+        scorearray = []
+    }
     let participant = objective.getParticipants();
     for (const part of participant) {
         for (const player of players) {
@@ -155,41 +170,7 @@ function calculateWinner() {
     scorearray.sort(function (a, b) {
         return objective.getScore(b) - objective.getScore(a);
     });
-    let body_string =
-        "\n\n\n\n----------\n1: §a" +
-        scorearray[0].name +
-        "§r§f with " +
-        objective.getScore(scorearray[0]) +
-        " points!";
-    if (scorearray.length > 1) {
-        body_string +=
-            "\n" +
-            "2: §b" +
-            scorearray[1].name +
-            "§r§f with " +
-            objective.getScore(scorearray[1]) +
-            " points!";
-    }
-    if (scorearray.length > 2) {
-        body_string +=
-            "\n" +
-            "2: §6" +
-            scorearray[2].name +
-            "§r§f with " +
-            objective.getScore(scorearray[2]) +
-            " points!";
-    }
-    body_string +=
-        "\nThere have been " +
-        scorearray.length +
-        " players participating!\n----------\n\n\n\n";
-    const action = new ActionFormData()
-        .title("Results")
-        .body(body_string)
-        .button("Close");
-    for (const player of players) {
-        action.show(player);
-    }
+    return { first: scorearray[0], second: scorearray[1], third: scorearray[2] }
 }
 
 
@@ -202,8 +183,9 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
         getRandomPlayer().setProperty("ao:is_tail", true)
         runCommand("structure load mystructure:tailmap 66 -50 103")
         spawnVentilators()
-        setupScoreboard()
+        scoreboard = setupScoreboard()
         rounds = calcRounds()
+        runCommand("scoreboard objectives setdisplay sidebar tailhitter")
     }
     if (event.id == "ao:tail") {
         getAllPlayers().forEach(player => {

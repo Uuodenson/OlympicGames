@@ -22,7 +22,9 @@
         "thor": "textures/entity/player/cosmetics/thor.png",
         "oni": "textures/entity/player/cosmetics/oni",
         "hades": "textures/entity/player/cosmetics/hades",
-        "tyche": "textures/entity/player/cosmetics/tyche"
+        "tyche": "textures/entity/player/cosmetics/tyche",
+        "cape_custom": "textures/entity/capes/black_pink_star_cape",
+        "batman": "textures/entity/capes/batman"
       },
       "geometry": {
         "default": "geometry.humanoid.custom",
@@ -36,7 +38,8 @@
         "thor": "geometry.thor",
         "oni": "geometry.oni",
         "hades": "geometry.hades",
-        "tyche": "geometry.tyche"
+        "tyche": "geometry.tyche",
+        "cape_custom": "geometry.cape_custom"
       },
       "scripts": {
         "scale": "0.9375",
@@ -66,10 +69,12 @@
           },
           {
             "tail_move": "query.property('ao:is_tail') && query.modified_move_speed != 0.0"
-          }
+          },
+          "cape_animation"
         ]
       },
       "animations": {
+        "cape_animation": "animation.player.custom_cape_animation",
         "tail_idle": "animation.player.tail.idle",
         "tail_move": "animation.player.tail.move",
         "hammer_controller": "controller.animation.hammer",
@@ -158,6 +163,9 @@
         },
         {
           "controller.render.tail.third_person": "!variable.is_first_person && !variable.map_face_icon && !query.is_spectator && query.property('ao:is_tail')"
+        },
+        {
+          "controller.render.player.cape": "!variable.is_first_person && !variable.map_face_icon && !query.is_spectator && !query.property('ao:cape_id') == 0"
         }
       ],
       "enable_attachables": true,

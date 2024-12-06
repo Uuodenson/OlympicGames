@@ -144,6 +144,19 @@ function GameLoop() {
                 pl.setDynamicProperty(config.player.property, 0)
                 world.sendMessage(pl.name + ": Got knocked Out!")
             }
+            let wheelie = world.getDimension("overworld").getEntities().filter((e) => e.typeId === config.wheelieEntity.typeId && e.hasTag("" + pl.name))
+            if (wheelie.length > 0) {
+                const whel = wheelie[0]
+                function calcdistance(player, wheelie) {
+                    let distance = Math.sqrt(Math.pow(player.location.x - wheelie.location.x, 2) + Math.pow(player.location.y - wheelie.location.y, 2) + Math.pow(player.location.z - wheelie.location.z, 2))
+                    return distance
+                }
+                let distance = calcdistance(pl, whel)
+                if (distance > 2) {
+                    pl.setDynamicProperty(config.player.property, 0)
+                    world.sendMessage(pl.name + ": Got knocked Out!")
+                }
+            }
 
         }
     }, 0)

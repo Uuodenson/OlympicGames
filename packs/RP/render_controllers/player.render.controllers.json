@@ -23,7 +23,7 @@
           "helmet": "variable.helmet_layer_visible && query.property('ao:skin_id') == 0"
         },
         {
-          "cape": true
+          "cape": "query.property('ao:cape_id') > 0"
         },
         {
           "rightItem": true
@@ -46,7 +46,10 @@
         { "bodyArmor": "variable.chest_layer_visible && !query.has_cape" },
         { "leftArmArmor": "variable.chest_layer_visible && !query.has_cape" },
         { "rightArmArmor": "variable.chest_layer_visible && !query.has_cape" },
-        { "belt": "variable.chest_layer_visible && variable.leg_layer_visible" }
+        {
+          "belt": "variable.chest_layer_visible && variable.leg_layer_visible"
+        },
+        { "cape_custom": true }
       ]
     },
     "controller.render.player.third_person_custom": {
@@ -85,6 +88,9 @@
       "textures": ["Array.textures[query.property('ao:skin_id')-1]"],
       "part_visibility": [
         { "*": true },
+
+        { "backpack": "query.property('ao:cape_id') == 0" },
+
         {
           "helmet": "variable.helmet_layer_visible"
         },
@@ -110,7 +116,10 @@
         { "bodyArmor": "variable.chest_layer_visible && !query.has_cape" },
         { "leftArmArmor": "variable.chest_layer_visible && !query.has_cape" },
         { "rightArmArmor": "variable.chest_layer_visible && !query.has_cape" },
-        { "belt": "variable.chest_layer_visible && variable.leg_layer_visible" }
+        {
+          "belt": "variable.chest_layer_visible && variable.leg_layer_visible"
+        },
+        { "cape_custom": true }
       ]
     },
     "controller.render.tail.third_person": {
@@ -125,12 +134,24 @@
     },
     "controller.render.player.cape": {
       "rebuild_animation_matrices": true,
-      "geometry": "Geometry.cape",
+      "arrays": {
+        "geometries": {
+          "Array.geo": ["Geometry.cape_custom"]
+        },
+        "textures": {
+          "Array.textures": [
+            "Texture.cape_custom",
+            "Texture.cape_custom",
+            "Texture.batman"
+          ]
+        }
+      },
+      "geometry": "Geometry.cape_custom",
       "materials": [{ "*": "Material.cape" }],
-      "textures": ["Texture.smiley.s"],
+      "textures": ["Array.textures[query.property('ao:cape_id')]"],
       "part_visibility": [
         {
-          "cape": "query.armor_texture_slot(1) != 5 && (!variable.is_first_person || variable.is_paperdoll) && !variable.map_face_icon && !query.is_spectator"
+          "cape": "(query.armor_texture_slot(1) != 5 && (!variable.is_first_person || variable.is_paperdoll) && !variable.map_face_icon && !query.is_spectator) || query.property('ao:cape_id') > 0"
         }
       ],
       "is_hurt_color": {

@@ -12,12 +12,14 @@ let loop
 let cap_max_number = 30
 let can_interact = true
 let cube_type = { one: 1, two: 2, three: 3, four: 4 }
+let timout
 function GameLoop() {
     loop = system.runInterval(() => {
         world.getDimension("overworld").runCommandAsync("/execute as @a run inputpermission set @s camera disabled")
         showText()
         if (getPlayers().length <= 1) {
             system.clearRun(loop)
+            system.clearRun(timout)
             world.afterEvents.itemUse.unsubscribe(itemUseEvent)
             if (getPlayers()[0] instanceof Player) {
                 world.sendMessage("§l" + getPlayers()[0].name + "§r wins!")
@@ -46,6 +48,7 @@ function setupRange() {
 }
 
 function showItems(event, item_string, amount, cube) {
+    system.clearRun(timout)
     if (event.itemStack.typeId == item_string && current_player == event.source && can_interact) {
         can_interact = false
         system.runTimeout(() => {
@@ -146,6 +149,99 @@ function showItems(event, item_string, amount, cube) {
     }
 }
 
+function setAFKmax() {
+    system.runTimeout(() => {
+        const treassure = world.getDimension("overworld").getEntities().filter((e) => e.hasTag("treassure") == false && e.typeId == "ao:interactable")
+        treassure.forEach((entity) => {
+            entity.remove()
+        })
+    }, 40)
+    let player = getPlayers()[indexed_player] ? getPlayers()[indexed_player] : getPlayers().filter((p) => p.hasTag("clicker"))[0]
+    const cubes = world.getDimension("overworld").spawnEntity("ao:interactable",
+        { x: player.location.x, y: player.location.y + 1.75, z: player.location.z })
+    cubes.setProperty("ao:type", cube_type.three)
+    cubes.nameTag = "3"
+
+    if (bomb > cap_max_number) {
+        bomb = 0
+    }
+    bomb += 3
+    if (getPlayers().length > indexed_player + 1) {
+        indexed_player++;
+    }
+    // otherwise, reset to 0
+    else {
+        indexed_player = 0;
+    }
+    player.runCommandAsync("clear @s")
+    if (bomb > range[0]) {
+        current_player.setProperty("ao:is_spectator", true)
+        world.sendMessage(current_player.name + " " + "got eaten by the Kraken")
+        const treassure = world.getDimension("overworld").spawnEntity("ao:interactable", { x: 76.57, y: -48.00, z: 121.44 })
+        treassure.setProperty("ao:type", cube_type.four)
+        treassure.addTag("treassure")
+        treassure.teleport({ x: 76.57, y: -48.00, z: 121.44 }, { facingLocation: { x: 83.96, y: -47.53, z: 121.46 } })
+        let i = 0;
+        let commands = [
+            { command: "/camera @a clear", tick: 0 },
+            { command: "/camera @a fade time 1 2 1", tick: 0 },
+            { command: "/effect @a invisibility 30 30 true", tick: 10 },
+            { command: "/testfor @p", tick: 8 },
+            { command: "/camera @a set minecraft:free ease 1 in_out_quad pos 87.37 -45.00 121.37 facing 76.93 -46.77 121.50", tick: 0 },
+            { command: "/camera @a set minecraft:free ease 8 in_out_quad pos 81.21 -46.13 121.53 facing 74.92 -45.52 121.42", tick: 20 },
+            { command: "/playsound treassure @a", tick: 0 },
+            { command: "/playanimation @e[type=ao:interactable] treassure", tick: 18 },
+            { command: "/camera @a fade time 1 1 1", tick: 70 },
+            { command: "/event entity @e[type=ao:interactable] despawn", tick: 20 },
+            { command: "/camera @a clear", tick: 0 },
+            { command: "/effect @a clear", tick: 0 },
+        ]
+        commands.forEach((command) => {
+
+            i = i + command.tick
+            system.runTimeout(() => {
+                world.getDimension("overworld").runCommand(command.command)
+            }, i)
+        })
+        system.runTimeout(() => {
+            if (current_player instanceof Player) {
+                player.removeTag("clicker")
+                current_player = getPlayers()[indexed_player] ? getPlayers()[indexed_player] : getPlayers().filter((p) => p.hasTag("clicker"))[0]
+                if (getPlayers().length > indexed_player + 1) {
+                    indexed_player++;
+                }
+                // otherwise, reset to 0
+                else {
+                    indexed_player = 0;
+                }
+                // show ui for the next player (or the first one if we just looped)
+                indexed_player += 1
+            }
+            bomb = 0
+
+            world.sendMessage(current_player.name)
+            giveItems()
+            if (current_player) {
+                current_player.playSound("note.pling", current_player.location)
+                world.getDimension("overworld").spawnParticle("minecraft:flame", current_player.location)
+                current_player.runCommandAsync("/camera @a set minecraft:free ease 0.5 in_sine pos ^^2^5 facing @s")
+                can_interact = true
+            }
+            resetSkin()
+        }, i + 10)
+    }
+    else {
+        current_player = getPlayers()[indexed_player] ? getPlayers()[indexed_player] : getPlayers().filter((p) => p.hasTag("clicker"))[0]
+        current_player.playSound("note.pling", current_player.location)
+        giveItems()
+        current_player.runCommandAsync("/camera @a set minecraft:free ease 0.5 in_sine pos ^^2^5 facing @s")
+        can_interact = true
+    }
+}
+
+
+
+
 function showText() {
     for (const player of world.getPlayers()) {
         if (player == current_player) {
@@ -191,6 +287,10 @@ function giveItems() {
     let bow = new ItemStack("minecraft:diamond_sword", 1)
     bow.nameTag = "Add 3 Points"
     inventory.setItem(2, bow)
+    timout = system.runInterval(() => {
+        system.clearRun(timout)
+        setAFKmax()
+    }, 10 * 20)
 }
 
 function setupPlayers() {
@@ -238,5 +338,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
             entity.setProperty("ao:type", cube_type.four)
         })
         gameEvents.triggerEvent("SetupTreasure", {})
+    }
+    if (event.id == "ao:resetspectator") {
+        getAllPlayers().forEach(player => {
+            player.setProperty("ao:is_spectator", false)
+        })
     }
 })

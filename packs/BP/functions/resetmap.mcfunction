@@ -6,3 +6,6 @@ clear @a
 event entity @e[type=ao:rideable] ao:despawn
 event entity @e[type=ao:jerusalem] ao:despawn
 inputpermission set @a movement enabled
+scriptevent ao:resetspectator
+camera @a clear
+inputpermission set @a camera enabled

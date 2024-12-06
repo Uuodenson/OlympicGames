@@ -66,9 +66,20 @@ function NameTags(player) {
     world.sendMessage(player.nameTag)
   });
 }
+function Capes(player) {
+  let id = player.getProperty("ao:cape_id")
+  if (id == 0) {
+    player.setProperty("ao:cape_id", 1)
+    world.sendMessage(id.toString());
+    return
+  }
+  player.setProperty("ao:cape_id", 0)
+  world.sendMessage(id.toString());
+}
 const forms = [
   { name: "Skins", callback: Skins },
   { name: "NameTags", callback: NameTags },
+  { name: "Capes", callback: Capes }
 ];
 /**
  *

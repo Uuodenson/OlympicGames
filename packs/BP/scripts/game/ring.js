@@ -1,7 +1,7 @@
 import { system, world, Player } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import resetSkin, { calcDistance, getAllPlayers, getOwner } from "./utils/functions";
-import { gameEvents } from "./Events";
+import { gameEvents, givePoints } from "./Events";
 let timer = 120;
 let spawn_timer = 2;
 let crown_timer = 17
@@ -141,6 +141,8 @@ function calculateWinner() {
             "§r§f with " +
             objective.getScore(scorearray[1]) +
             " points!";
+    } else {
+        scorearray[1] = "-"
     }
     if (scorearray.length > 2) {
         body_string +=
@@ -151,18 +153,14 @@ function calculateWinner() {
             objective.getScore(scorearray[2]) +
             " points!";
     }
+    else {
+        scorearray[2] = "-"
+    }
     body_string +=
         "\nThere have been " +
         scorearray.length +
         " players participating!\n----------\n\n\n\n";
-    const action = new ActionFormData()
-        .title("Results")
-        .body(body_string)
-        .button("Close");
-    for (const player of players) {
-        action.show(player);
-    }
-    return scorearray[0]
+    return { first: scorearray[0], second: scorearray[1], third: scorearray[2] }
 }
 function setupScoreBoard() {
     if (world.scoreboard) {
@@ -280,8 +278,8 @@ function GameLoop() {
             world.getDimension("overworld").runCommand("/function resetmap")
             resetSkin();
             getAllPlayers().forEach((player) => {
-                gameEvents.triggerEvent("Exp.Coins", { amount: 30, player: player }) //! Trigger Event
-            })
+                givePoints(player, 1, winner)
+            });
             gameEvents.triggerEvent("NextRound", { player: getOwner()[0] })
             gameEvents.triggerEvent("Looby")
         }

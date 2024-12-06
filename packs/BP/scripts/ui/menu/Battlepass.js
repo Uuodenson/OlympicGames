@@ -43,7 +43,7 @@ export function BattlePass(player) {
     battlepassForm.title("BattlePass")
         .body("You can use this to buy a BattlePass")
     Sites[site].forEach((button, index) => {
-        battlepassForm.button(button.name, "textures/ui/menu/yellow_stripe")
+        battlepassForm.button(button.name, "textures/ui/assets/battlepass/angry")
     })
     battlepassForm.show(player).then(result => {
         if (result.canceled) return

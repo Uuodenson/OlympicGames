@@ -16,10 +16,7 @@ function addPlayer(id) {
   let newdata = [];
   let player = world.getAllPlayers().find((player) => player.id === id);
   let shouldupdate = false
-  activeData.forEach((data, index) => {
-    if (data.id !== 0) {
-      return
-    }
+  activeData.filter((data) => data.id == 0).forEach((data, index) => {
     let pushdata = { id: data.id, data: [] }
     let shouldreplace = false;
     if (!player.getDynamicProperty(data.name)) {
@@ -43,10 +40,7 @@ function addPlayer(id) {
       newdata.push(pushdata);
     }
   });
-  activeData.forEach((data, index) => {
-    if (data.id === 0) {
-      return
-    }
+  activeData.filter((data) => data.id !== 0).forEach((data, index) => {
     let pushdata = { id: data.id, data: [] }
     if (!player.getDynamicProperty(data.name)) {
       player.setDynamicProperty(data.name, JSON.stringify(data.default));

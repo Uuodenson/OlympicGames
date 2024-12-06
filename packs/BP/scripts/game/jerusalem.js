@@ -33,53 +33,58 @@ function showText() {
     runCommand(`/title @a actionbar Current Song: ${songdf.display}\n${rounds} lenght:${players}`)
 }
 
-function spawnChair() {
-    runCommand("tag @a remove chair")
-    runCommand("event entity @e ao:despawn")
-    let players = world.getPlayers().filter((p) => !p.hasTag("chair:out"))
-    let time = Math.floor(3 + Math.random() * 20) * 20
-    let randomsong = Math.floor(Math.random() * songdf.songs.length)
-    let song = songdf.songs[randomsong]
-    if (rounds > 0 && players.length > 1) {
-        world.playMusic(song.song)
-        songdf.display = song.name
-        system.runTimeout(() => {
-            world.stopMusic()
-            players.forEach((p) => { playSound("note.pling", p.location) })
-            let lplayers = players.length - 1
-            for (let i = 0; i < lplayers; i++) {
-                let player = players[i]
-                let location = returnLocation()
-                const chairEN = spawnEntity(chair.typeId, location)
-                chairEN.setProperty(chair.property.skin.name, chair.property.skin.id)
-                chairEN.setProperty(chair_animation_enum, chair.property.animation.spawn.id)
-                system.runTimeout(() => {
-                    chairEN.setProperty(chair_animation_enum, chair.property.animation.swing.id)
-                }, Math.round(0.75 * 20))
-            }
-            system.runTimeout(() => {
-                system.runTimeout(() => {
-                    let playerOut = world.getPlayers().filter((p) => !p.hasTag("chair"))
-                    playerOut.forEach((p) => {
-                        p.addTag("chair:out")
-                        runCommand(`/title @a actionbar ${p.name} got out of the game!`)
-                    })
-                    rounds -= 1
-                    spawnChair()
-                }, 20)
 
-            }, 40)
-        }, time)
-    } else {
-        let winner = players.filter((p) => p.hasTag("chair:out") == false)[0]
-        runCommand(`/title @a actionbar ${winner.name} won the game!`)
-        system.clearRun(loop)
-        runCommand("function resetmap")
-        getAllPlayers().forEach((p) => {
-            gameEvents.triggerEvent("Exp.Coins", { amount: 30, player: p }) //! Trigger Event
-        })
-        gameEvents.triggerEvent("NextRound", { player: getOwner()[0] })
-    }
+
+async function spawnChair() {
+    return new Promise((resolve) => {
+        runCommand("tag @a remove chair")
+        runCommand("event entity @e ao:despawn")
+        let players = world.getPlayers().filter((p) => !p.hasTag("chair:out"))
+        let time = Math.floor(3 + Math.random() * 20) * 20
+        let randomsong = Math.floor(Math.random() * songdf.songs.length)
+        let song = songdf.songs[randomsong]
+        if (rounds > 0 && players.length > 1) {
+            world.playMusic(song.song)
+            songdf.display = song.name
+            system.runTimeout(() => {
+                world.stopMusic()
+                players.forEach((p) => { playSound("note.pling", p.location) })
+                let lplayers = players.length - 1
+                for (let i = 0; i < lplayers; i++) {
+                    let player = players[i]
+                    let location = returnLocation()
+                    const chairEN = spawnEntity(chair.typeId, location)
+                    chairEN.setProperty(chair.property.skin.name, chair.property.skin.id)
+                    chairEN.setProperty(chair_animation_enum, chair.property.animation.spawn.id)
+                    system.runTimeout(() => {
+                        chairEN.setProperty(chair_animation_enum, chair.property.animation.swing.id)
+                    }, Math.round(0.75 * 20))
+                }
+                let playertesting = system.runInterval(() => {
+                    let chairplayer = world.getPlayers().filter((p) => p.hasTag("chair"))
+                    if (chairplayer.length > 0) {
+                        let playerOut = world.getPlayers().filter((p) => !p.hasTag("chair"))
+                        playerOut.forEach((p) => {
+                            p.addTag("chair:out")
+                            runCommand(`/title @a actionbar ${p.name} got out of the game!`)
+                        })
+                        rounds -= 1
+                        spawnChair()
+                        system.clearRun(playertesting)
+                    }
+                }, 5)
+            }, time)
+        } else {
+            let winner = players.filter((p) => p.hasTag("chair:out") == false)[0]
+            runCommand(`/title @a actionbar ${winner.name} won the game!`)
+            system.clearRun(loop)
+            runCommand("function resetmap")
+            getAllPlayers().forEach((p) => {
+                gameEvents.triggerEvent("Exp.Coins", { amount: 30, player: p }) //! Trigger Event
+            })
+            gameEvents.triggerEvent("NextRound", { player: getOwner()[0] })
+        }
+    })
 
 }
 

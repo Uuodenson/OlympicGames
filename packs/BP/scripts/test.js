@@ -1,4 +1,9 @@
-let test = { t: "test" }
-for (let [key, value] of Object.entries(test)) {
-    console.log(value)
-}
+const promise = new Promise((resolve) => {
+    setTimeout(() => {
+        resolve(true)
+    }, 1000)
+})
+
+promise.then((result) => {
+    console.log(result)
+})
